@@ -1,0 +1,22 @@
+{
+    "env": {
+        "browser": false,
+        "commonjs": true,
+        "es2021": true,
+        "mocha": true
+    },
+    "extends": "airbnb-base",
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "rules": {
+        "no-console": "error",
+        "func-names": "off",
+        "no-underscore-dangle": "off",
+        "consistent-return": "off",
+        "security/detect-object-injection": "off"
+    },
+    "plugins": [
+        "mocha"
+    ]
+}
