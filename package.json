@@ -15,7 +15,8 @@
     "prettier:fix": "prettier --write **/*.js",
     "test": "mocha tests --recursive",
     "test-watch": "mocha tests --recursive --watch",
-    "test:report": "mocha tests --recursive --reporter mochawesome"
+    "test:report": "mocha tests --recursive --reporter mochawesome",
+    "prepare": "husky install"
   },
   "author": "Blott",
   "license": "ISC",
@@ -43,6 +44,7 @@
     "eslint-plugin-prettier": "^5.1.2",
     "eslint-plugin-security": "^2.1.0",
     "faker": "^6.6.6",
+    "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
     "mocha": "^10.2.0",
     "mochawesome": "^7.1.3",
