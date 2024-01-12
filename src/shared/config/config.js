@@ -1,6 +1,15 @@
 require('dotenv').config();
 
+const envVars = process.env;
+
 module.exports = {
-  env: process.env.NODE_ENV,
-  port: process.env.PORT,
+  env: envVars.NODE_ENV,
+  port: envVars.PORT,
+  postgres: {
+    db_host: envVars.DB_HOST,
+    db_port: envVars.DB_PORT,
+    db_username: envVars.DB_USERNAME,
+    db_password: envVars.DB_PASSWORD,
+    db_name: envVars.DB_NAME,
+  },
 };

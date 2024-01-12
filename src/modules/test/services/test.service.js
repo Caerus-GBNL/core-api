@@ -1,5 +1,6 @@
 const httpStatus = require('http-status');
 const ApiError = require('../../../shared/utils/ApiError');
+const { opayPayment } = require('../models');
 
 /**
  * Dummy
@@ -13,6 +14,14 @@ const dummy = async (data) => {
   return data;
 };
 
+const fetch = async () => {
+  const first10Records = await opayPayment.findAll({
+    limit: 10,
+  });
+  return first10Records;
+};
+
 module.exports = {
   dummy,
+  fetch,
 };

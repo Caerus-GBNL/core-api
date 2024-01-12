@@ -8,6 +8,12 @@ const dummy = catchAsync(async (req, res) => {
   res.status(httpStatus.OK).send(result);
 });
 
+const fetch = catchAsync(async (req, res) => {
+  const result = await testService.fetch();
+  res.status(httpStatus.OK).send(result);
+});
+
 module.exports = {
   dummy,
+  fetch,
 };
