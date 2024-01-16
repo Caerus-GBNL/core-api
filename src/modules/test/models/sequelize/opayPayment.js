@@ -1,7 +1,7 @@
 // for testing
 
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('../../../shared/config/sequelize');
+const { sequelize } = require('../../../../shared/config/sequelize');
 
 const OpayPayment = sequelize.define('OpayPayment', {
   transactionid: {

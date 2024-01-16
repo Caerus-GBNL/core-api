@@ -12,4 +12,8 @@ module.exports = {
     db_password: envVars.DB_PASSWORD,
     db_name: envVars.DB_NAME,
   },
+  mongoose: {
+    url: envVars.MONGODB_URL,
+    options: {},
+  },
 };

@@ -13,7 +13,13 @@ const fetch = catchAsync(async (req, res) => {
   res.status(httpStatus.OK).send(result);
 });
 
+const mongoose = catchAsync(async (req, res) => {
+  const result = await testService.mongoose();
+  res.status(httpStatus.OK).send(result);
+});
+
 module.exports = {
   dummy,
   fetch,
+  mongoose,
 };
