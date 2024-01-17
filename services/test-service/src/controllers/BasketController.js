@@ -1,7 +1,7 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../../../../common/utils/catchAsync');
-const BasketRepository = require('../adapters/BasketRepository');
-const BasketUseCase = require('../useCases/BasketUseCase');
+const { BasketRepository } = require('../adapters');
+const { BasketUseCase } = require('../useCases');
 
 const basket = catchAsync(async (req, res) => {
   const basketRepository = new BasketRepository();

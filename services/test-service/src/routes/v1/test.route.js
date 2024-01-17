@@ -1,5 +1,5 @@
 const express = require('express');
-const BasketController = require('../../controllers/BasketController');
+const { BasketController } = require('../../controllers');
 
 const router = express.Router();
 
@@ -10,8 +10,8 @@ module.exports = router;
 
 /**
  * @swagger
- * /test/basket:
- *   get:
+ * /test/baskets:
+ *   post:
  *     description: Get an example
  *     responses:
  *       200:

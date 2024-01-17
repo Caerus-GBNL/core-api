@@ -1,4 +1,4 @@
-const Basket = require('../entities/Basket');
+const { Basket } = require('../entities');
 
 class BasketRepository {
   create(basket) {
