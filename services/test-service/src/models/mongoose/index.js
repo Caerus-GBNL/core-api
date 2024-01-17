@@ -1,1 +1,1 @@
-module.exports.Basket = require('./basket.model');
+module.exports.BasketModel = require('./basket.model');

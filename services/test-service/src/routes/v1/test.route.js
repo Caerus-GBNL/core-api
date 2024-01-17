@@ -1,17 +1,16 @@
 const express = require('express');
-const testController = require('../../controllers/test.controller');
+const BasketController = require('../../controllers/BasketController');
 
 const router = express.Router();
 
-router.get('/dummy', testController.dummy);
-router.get('/sequelize', testController.fetch);
-router.get('/mongoose', testController.mongoose);
+router.get('/baskets/:id', BasketController.basket);
+router.post('/baskets', BasketController.create);
 
 module.exports = router;
 
 /**
  * @swagger
- * /test/dummy:
+ * /test/basket:
  *   get:
  *     description: Get an example
  *     responses:
