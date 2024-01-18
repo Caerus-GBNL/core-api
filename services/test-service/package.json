@@ -19,6 +19,7 @@
     "express-validation": "^4.1.0",
     "helmet": "^7.1.0",
     "http-status": "^1.7.3",
+    "joi": "^17.12.0",
     "mongoose": "^8.0.4",
     "morgan": "^1.10.0",
     "pg": "^8.11.3",

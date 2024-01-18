@@ -1,10 +1,12 @@
 const express = require('express');
 const { BasketController } = require('../../controllers');
+const validate = require('../../../../../common/middlewares/validate');
+const basketValidation = require('../../validations/basket.validation');
 
 const router = express.Router();
 
 router.get('/baskets/:id', BasketController.basket);
-router.post('/baskets', BasketController.create);
+router.post('/baskets', validate(basketValidation.createBasket), BasketController.create);
 
 module.exports = router;
 

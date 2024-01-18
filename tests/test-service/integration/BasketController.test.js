@@ -14,6 +14,7 @@ describe('Test routes', () => {
     it('should return a response with status 200', async () => {
       const response = await request(app)
         .post('/api/v1/test/baskets')
+        .send({ qty: 1 })
         .expect(httpStatus.OK);
 
       const result = response.body;
