@@ -25,7 +25,7 @@ const transports = [
   }),
 ];
 
-if (config.logging.enabled) {
+if (config.logging.enabled === true) {
   transports.push(
     new DailyRotateFile({
       level: 'info',

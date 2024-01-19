@@ -18,5 +18,7 @@ module.exports = {
   },
   logging: {
     enabled: envVars.LOGGING_ENABLED,
+    maxFileSize: envVars.LOGGING_MAX_FILE_SIZE,
+    maxFiles: envVars.LOGGING_MAX_FILES,
   },
 };
