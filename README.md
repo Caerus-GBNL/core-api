@@ -1,1 +1,1 @@
-# core-api
+# Microservice Template
