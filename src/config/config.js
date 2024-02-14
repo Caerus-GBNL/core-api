@@ -3,18 +3,18 @@ require('dotenv').config();
 const envVars = process.env;
 
 module.exports = {
-  env: envVars.NODE_ENV,
-  port: envVars.PORT,
-  postgres: {
-    db_host: envVars.DB_HOST,
-    db_port: envVars.DB_PORT,
-    db_username: envVars.DB_USERNAME,
-    db_password: envVars.DB_PASSWORD,
-    db_name: envVars.DB_NAME,
+  service: {
+    name: '',
+    env: envVars.NODE_ENV,
+    port: envVars.PORT,
   },
-  mongoose: {
-    url: envVars.MONGODB_URL,
-    options: {},
+  postgres: {
+    host: envVars.DB_HOST,
+    port: envVars.DB_PORT,
+    username: envVars.DB_USERNAME,
+    password: envVars.DB_PASSWORD,
+    database: envVars.DB_NAME,
+    dialect: 'postgres',
   },
   logging: {
     enabled: envVars.LOGGING_ENABLED,
