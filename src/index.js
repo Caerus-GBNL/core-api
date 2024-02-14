@@ -2,8 +2,8 @@ const app = require('./app');
 const config = require('./config/config');
 const logger = require('./config/logger');
 
-const server = app.listen(config.service.port, () => {
-  logger.info(`Listening to port ${config.service.port}`);
+const server = app.listen(config.port, () => {
+  logger.info(`Listening to port ${config.port}`);
 });
 const exitHandler = () => {
   if (server) {

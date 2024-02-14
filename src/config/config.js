@@ -4,10 +4,10 @@ const envVars = process.env;
 
 module.exports = {
   service: {
-    name: '',
-    env: envVars.NODE_ENV,
-    port: envVars.PORT,
+    name: 'test',
   },
+  port: envVars.PORT,
+  env: envVars.NODE_ENV,
   postgres: {
     host: envVars.DB_HOST,
     port: envVars.DB_PORT,

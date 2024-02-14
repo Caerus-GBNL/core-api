@@ -6,7 +6,7 @@ const config = require('../../src/config/config');
 
 describe('Test routes', () => {
   const service = config.service.name;
-  describe(`POST ${service}/test/baskets`, () => {
+  describe(`POST /${service}/test/baskets`, () => {
     let expect;
 
     before(async () => {
@@ -15,7 +15,7 @@ describe('Test routes', () => {
 
     it('should return a response with status 200', async () => {
       const response = await request(app)
-        .post(`${service}/test/baskets`)
+        .post(`/${service}/test/baskets`)
         .send({ qty: 1 })
         .expect(httpStatus.OK);
 
