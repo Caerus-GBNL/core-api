@@ -3,6 +3,7 @@ const helmet = require('helmet');
 const compression = require('compression');
 const cors = require('cors');
 const httpStatus = require('http-status');
+const path = require('path');
 const config = require('./config/config');
 const morgan = require('./config/morgan');
 const routes = require('./routes/v1');
@@ -32,8 +33,10 @@ app.use(compression());
 app.use(cors());
 app.options('*', cors());
 
+app.use('/', express.static(path.join(__dirname, '..', 'public')));
+
 // api routes
-app.use('/api/v1', routes);
+app.use(`/${config.service.name}`, routes);
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
