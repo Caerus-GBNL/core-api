@@ -51,7 +51,7 @@
     "eslint-plugin-mocha": "^10.2.0",
     "eslint-plugin-prettier": "^5.1.2",
     "eslint-plugin-security": "^2.1.0",
-    "faker": "^6.6.6",
+    "faker": "^5.5.3",
     "husky": "^8.0.3",
     "mocha": "^10.2.0",
     "mochawesome": "^7.1.3",
