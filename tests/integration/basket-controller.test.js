@@ -2,9 +2,11 @@ const request = require('supertest');
 const httpStatus = require('http-status');
 const app = require('../../src/app');
 const setUp = require('../set-up');
+const config = require('../../src/config/config');
 
 describe('Test routes', () => {
-  describe('POST /api/v1/test/baskets', () => {
+  const service = config.service.name;
+  describe(`POST /${service}/test/baskets`, () => {
     let expect;
 
     before(async () => {
@@ -13,7 +15,7 @@ describe('Test routes', () => {
 
     it('should return a response with status 200', async () => {
       const response = await request(app)
-        .post('/api/v1/test/baskets')
+        .post(`/${service}/test/baskets`)
         .send({ qty: 1 })
         .expect(httpStatus.OK);
 
