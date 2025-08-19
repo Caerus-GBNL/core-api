@@ -8,6 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run dev` - Start development server with nodemon
 - `npm start` - Start production server with PM2
 - `npm test` - Run all tests with mocha
+- `npm run test:file <path>` - Run a specific test file
 - `npm run test-watch` - Run tests in watch mode
 - `npm run test:report` - Generate mochawesome test report
 
@@ -54,14 +55,14 @@ Data access is abstracted through repositories that wrap ORM models. Repositorie
 ### Configuration and Environment
 
 **Environment-specific configs:**
-- Configuration loaded from `src/config/config.js`
-- Database: MongoDB with Mongoose, PostgreSQL with Sequelize (dual database support)
+- Configuration loaded from `src/config/config.js` and `.env` files
+- Database: PostgreSQL with Sequelize (MongoDB removed from current implementation)
 - Structured config object with environment-based settings
 
 **Configuration sections:**
-- Database connection settings (MongoDB and PostgreSQL)
-- External service URLs
-- Security configurations (helmet, CORS, mongo-sanitize)
+- Database connection settings (PostgreSQL)
+- Service configuration (service name: 'test')
+- Security configurations (helmet, CORS)
 - Logging configuration (Winston with daily rotation)
 - PM2 process management settings
 
@@ -69,7 +70,7 @@ Data access is abstracted through repositories that wrap ORM models. Repositorie
 - **Express.js** with security middleware
 - **Winston** for structured logging with daily rotation
 - **Joi** for request validation
-- **Swagger** for API documentation at `/api/v1/docs`
+- **Swagger** for API documentation at `/{service-name}/v1/docs`
 - **Morgan** HTTP logging with custom success/error handlers
 - **Centralized error handling** with custom ApiError class
 
@@ -96,16 +97,17 @@ Data access is abstracted through repositories that wrap ORM models. Repositorie
 **Common Security Patterns:**
 - Environment-based configuration management
 - Input validation and sanitization with Joi
-- MongoDB sanitization to prevent NoSQL injection
 - Request security headers with helmet
 - CORS configuration for cross-origin requests
+- SQL injection prevention with Sequelize ORM
 
 ### Development Workflow
 
 **Environment Setup:**
-- Database setup (MongoDB and PostgreSQL)
-- Environment-specific configuration files
-- ORM setup for database management
+- Database setup (PostgreSQL)
+- Environment-specific configuration files (`.env` files)
+- Sequelize ORM setup for database management
+- Copy `.env.example` to `.env` and configure required variables
 
 **Code Style:**
 - ESLint with Airbnb config + security rules
@@ -114,8 +116,10 @@ Data access is abstracted through repositories that wrap ORM models. Repositorie
 - No console statements allowed (use logger instead)
 
 **Branch Strategy:**
-- Feature branches with current naming: `setup-microservice`
-- Main/Master branch for stable releases
+- Feature branches created from develop with ticket IDs (e.g., `CI-XXXX` or `PROJ-XXXX`)
+- Develop branch for feature development and integration
+- UAT branch for UAT/QA releases
+- Main branch for production releases
 
 ### Commit Strategy
 
@@ -123,7 +127,7 @@ Data access is abstracted through repositories that wrap ORM models. Repositorie
 ```
 [PROJECT]-[TICKET-NUMBER] or [PROJECT]-[TICKET-NUMBER]-[short-description]
 ```
-Examples: `CI-2449`, `setup-microservice`
+Examples: `CI-2449`, `CI-2449-authentication`
 
 **Commit Message Structure:**
 ```
@@ -169,6 +173,22 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 - Prettier code formatting checks
 - Full test suite execution
 - All quality gates must pass before commit completion
+
+### Database Operations
+
+**PostgreSQL with Sequelize:**
+- Models located in `src/models/sequelize/`
+- Database configuration in `src/config/sequelize.js`
+- Connection handled through `src/config/config.js`
+- Supports dual database architecture pattern
+
+### API Routing
+
+**Service-based Routing:**
+- All routes prefixed with service name: `/{service-name}/`
+- Current service name: `test` (configurable in `src/config/config.js`)
+- API endpoints: `/{service-name}/v1/`
+- Swagger documentation: `/{service-name}/v1/docs`
 
 ### Pull Request Process
 
