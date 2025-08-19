@@ -1,8 +1,8 @@
 const Basket = require('../entities/basket');
 
 class BasketUseCase {
-  constructor(BasketRepository) {
-    this.basketRepository = BasketRepository;
+  constructor({ basketRepository }) {
+    this.basketRepository = basketRepository;
   }
 
   createBasket(params) {

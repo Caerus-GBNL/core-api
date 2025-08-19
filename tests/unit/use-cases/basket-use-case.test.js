@@ -12,7 +12,7 @@ describe('BasketUseCase Class', () => {
   beforeEach(async () => {
     ({ expect } = await setUp.setupTests());
     sandbox = sinon.createSandbox();
-    basketUseCase = new BasketUseCase(new BasketRepository());
+    basketUseCase = new BasketUseCase({ basketRepository: new BasketRepository() });
   });
 
   afterEach(() => {
