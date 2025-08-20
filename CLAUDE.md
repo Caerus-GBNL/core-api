@@ -67,12 +67,12 @@ Data access is abstracted through repositories that wrap ORM models. Repositorie
 
 **Environment-specific configs:**
 - Configuration loaded from `src/config/config.js` and `.env` files
-- Database: PostgreSQL with Sequelize (MongoDB removed from current implementation)
+- Database: PostgreSQL with Sequelize
 - Structured config object with environment-based settings
 
 **Configuration sections:**
 - Database connection settings (PostgreSQL)
-- Service configuration (service name: 'test')
+- Service configuration (service name: 'onboarding')
 - Security configurations (helmet, CORS)
 - Logging configuration (Winston with daily rotation)
 - PM2 process management settings
@@ -155,12 +155,10 @@ Examples: `CI-2449`, `CI-2449-authentication`
 Key Features Implemented:
 - [Feature 1 with business value]
 - [Feature 2 with business value]
-- [Feature 3 with business value]
 
 Technical Implementation:
 - [Technical detail 1]
 - [Technical detail 2]
-- [Technical detail 3]
 
 Testing & Quality:
 - [Test coverage details]
