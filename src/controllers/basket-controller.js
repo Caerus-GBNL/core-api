@@ -1,19 +1,16 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catch-async');
-const { BasketRepository } = require('../adapters');
-const { BasketUseCase } = require('../use-cases');
+const container = require('../di');
 
 const basket = catchAsync(async (req, res) => {
-  const basketRepository = new BasketRepository();
-  const basketUseCase = new BasketUseCase(basketRepository);
-  const baskets = await basketUseCase.getBasketsByEmployeeId(965);
+  const basketUseCase = container.resolve('basketUseCase');
+  const baskets = await basketUseCase.getBasketsByEmployeeId(req.params.id);
   res.status(httpStatus.OK).send(baskets);
 });
 
 const create = catchAsync(async (req, res) => {
-  const basketRepository = new BasketRepository();
-  const basketUseCase = new BasketUseCase(basketRepository);
-  const created = await basketUseCase.createBasket(150);
+  const basketUseCase = container.resolve('basketUseCase');
+  const created = await basketUseCase.createBasket(req.body);
   res.status(httpStatus.OK).send(created);
 });
 
