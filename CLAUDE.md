@@ -133,7 +133,7 @@ Data access is abstracted through repositories that wrap ORM models. Repositorie
 - No console statements allowed (use logger instead)
 
 **Branch Strategy:**
-- Feature branches created from develop with ticket IDs (e.g., `CI-XXXX` or `PROJ-XXXX`)
+- Feature branches created from develop with JIRA ticket IDs (e.g., `CI-XXXX` or `PROJ-XXXX`)
 - Develop branch for feature development and integration
 - UAT branch for UAT/QA releases
 - Main branch for production releases
@@ -142,13 +142,13 @@ Data access is abstracted through repositories that wrap ORM models. Repositorie
 
 **Branch Naming Convention:**
 ```
-[PROJECT]-[TICKET-NUMBER] or [PROJECT]-[TICKET-NUMBER]-[short-description]
+[JIRA-TICKET-ID] or [JIRA-TICKET-ID]-[short-description]
 ```
 Examples: `CI-2449`, `CI-2449-authentication`
 
 **Commit Message Structure:**
 ```
-[PROJECT]-[TICKET-NUMBER]: [Clear summary of the feature/change]
+[JIRA-TICKET-ID]: [Clear summary of the feature/change]
 
 [Detailed description explaining the business context and what was implemented]
 
@@ -178,7 +178,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 ```
 
 **Commit Principles:**
-- Always start with ticket ID
+- Always start with JIRA ticket ID
 - Business-first approach - explain the value before technical details
 - Structured sections for easy scanning and review
 - Comprehensive coverage of all changes made
@@ -212,7 +212,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 When creating pull requests, use standardized PR templates if available (located at `.github/pull_request_template.md`):
 
 **Common PR Template Sections:**
-- Summary with ticket link (CI-XXXX format)
+- Summary with JIRA ticket link (CI-XXXX format)
 - Type of change classification
 - Key features implemented checklist
 - Technical implementation details
@@ -222,5 +222,5 @@ When creating pull requests, use standardized PR templates if available (located
 
 **PR Creation Command:**
 ```bash
-gh pr create --title "[PROJECT]-XXXX: Brief description" --body "$(cat .github/pull_request_template.md)"
+gh pr create --title "[JIRA-TICKET-ID]: Brief description" --body "$(cat .github/pull_request_template.md)"
 ```
