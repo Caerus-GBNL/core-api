@@ -5,14 +5,13 @@ class BasketUseCase {
     this.basketRepository = basketRepository;
   }
 
-  createBasket(params) {
-    const data = {
-      employeeId: 'emp123',
-      productId: 'prod456',
-      productCode: 'ABC123',
-      qty: params,
-    };
-    const basket = new Basket(data.employeeId, data.productId, data.productCode, data.qty);
+  createBasket(basketData) {
+    const basket = new Basket(
+      basketData.employeeId,
+      basketData.productId,
+      basketData.productCode,
+      basketData.qty,
+    );
     return this.basketRepository.create(basket);
   }
 

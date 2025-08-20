@@ -1,16 +1,37 @@
-const { Basket } = require('../entities');
+const { Basket: BasketEntity } = require('../entities');
 
 class BasketRepository {
-  create(basket) {
-    // Implementation to save basket to the database
-    // Database-specific code to save the basket's data
-    return basket;
+  constructor({ basketModel }) {
+    this.basketModel = basketModel;
   }
 
-  getByEmployeeId(employeeId) {
-    // Implementation to retrieve basket from the database
-    // Database-specific code to retrieve basket data
-    return new Basket(employeeId, 123, 'SDFG', 250);
+  async create(basket) {
+    const created = await this.basketModel.create({
+      employeeId: basket.employeeId,
+      productId: basket.productId,
+      productCode: basket.productCode,
+      qty: basket.qty,
+    });
+
+    return new BasketEntity(
+      created.employeeId,
+      created.productId,
+      created.productCode,
+      created.qty,
+    );
+  }
+
+  async getByEmployeeId(employeeId) {
+    const baskets = await this.basketModel.findAll({
+      where: { employeeId },
+    });
+
+    return baskets.map((basket) => new BasketEntity(
+      basket.employeeId,
+      basket.productId,
+      basket.productCode,
+      basket.qty,
+    ));
   }
 }
 

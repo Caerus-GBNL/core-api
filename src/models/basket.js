@@ -15,7 +15,27 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Basket.init({
-    id: DataTypes.INTEGER,
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    employeeId: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    productId: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    productCode: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    qty: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   }, {
     sequelize,
     modelName: 'Basket',

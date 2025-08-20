@@ -242,6 +242,79 @@ container.register({
 });
 ```
 
+### Registration Types: `asValue` vs `asClass` vs `asFunction`
+
+#### `asValue` - For Pre-configured Objects
+Use when injecting existing instances, constructors, or pre-configured objects:
+
+```javascript
+const { Basket } = require('../models'); // Sequelize model constructor
+
+container.register({
+  basketModel: asValue(Basket), // Injects the model constructor itself
+  config: asValue({ apiUrl: 'https://api.example.com' }),
+  logger: asValue(winston.createLogger({ ... }))
+});
+```
+
+**When to use `asValue`:**
+- Sequelize/Mongoose model constructors
+- Pre-configured instances (loggers, clients)
+- Configuration objects
+- Third-party library instances
+
+#### `asClass` - For Dependency Injection Classes
+Use for classes that need constructor dependency injection:
+
+```javascript
+container.register({
+  basketRepository: asClass(BasketRepository).singleton(),
+  basketUseCase: asClass(BasketUseCase)
+});
+```
+
+**When to use `asClass`:**
+- Repository classes
+- Use case classes
+- Service classes that need dependencies injected
+
+#### `asFunction` - For Factory Functions
+Use for dynamic creation or complex initialization:
+
+```javascript
+container.register({
+  config: asFunction(() => ({
+    apiUrl: process.env.API_URL,
+    timeout: 5000
+  })).singleton(),
+  
+  dynamicService: asFunction(({ config }) => {
+    return new SomeService(config.apiUrl);
+  })
+});
+```
+
+#### Example: Sequelize Model Registration
+
+```javascript
+// ❌ Wrong - asClass tries to instantiate with 'new Basket(dependencies)'
+basketModel: asClass(Basket)
+
+// ✅ Correct - asValue injects the pre-configured model constructor
+basketModel: asValue(Basket)
+
+// Usage in Repository:
+class BasketRepository {
+  constructor({ basketModel }) {
+    this.basketModel = basketModel; // Receives Sequelize model constructor
+  }
+  
+  async create(data) {
+    return await this.basketModel.create(data); // Uses Sequelize methods
+  }
+}
+```
+
 ## Troubleshooting
 
 ### Common Issues
