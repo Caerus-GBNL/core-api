@@ -1,6 +1,6 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catch-async');
-const container = require('../container');
+const container = require('../di');
 
 const basket = catchAsync(async (req, res) => {
   const basketUseCase = container.resolve('basketUseCase');
