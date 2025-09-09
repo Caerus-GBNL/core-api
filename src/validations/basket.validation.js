@@ -2,6 +2,9 @@ const Joi = require('joi');
 
 const createBasket = {
   body: Joi.object().keys({
+    employeeId: Joi.string().required(),
+    productId: Joi.string().required(),
+    productCode: Joi.string().required(),
     qty: Joi.number().required().integer(),
   }),
 };

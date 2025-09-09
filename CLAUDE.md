@@ -33,12 +33,23 @@ The repository follows these layers:
 
 ### Key Architectural Patterns
 
-**Dependency Injection in Controllers:**
-Controllers instantiate dependencies manually:
+**Dependency Injection with Awilix:**
+Controllers use the DI container to resolve dependencies:
 ```javascript
-const repository = new Repository(Model);
-const useCase = new UseCase(repository, service);
+const container = require('../di');
+const useCase = container.resolve('serviceName');
 ```
+
+**DI Container Structure:**
+- `src/di/container.js` - Awilix container initialization
+- `src/di/bindings.js` - Service registration configuration  
+- `src/di/index.js` - Exported configured container
+- `src/di/README.md` - Complete DI documentation
+
+**Service Registration Patterns:**
+- **Repositories**: Registered as singletons for shared database connections
+- **Use Cases**: Registered as transient for request isolation
+- **Constructor Pattern**: Services use destructuring `constructor({ dependency })`
 
 **Entity Builder Pattern:**
 Domain entities use builder pattern for construction:
@@ -68,6 +79,7 @@ Data access is abstracted through repositories that wrap ORM models. Repositorie
 
 **Key Components:**
 - **Express.js** with security middleware
+- **Awilix** for dependency injection container with circular dependency detection
 - **Winston** for structured logging with daily rotation
 - **Joi** for request validation
 - **Swagger** for API documentation at `/{service-name}/v1/docs`
@@ -91,6 +103,11 @@ Data access is abstracted through repositories that wrap ORM models. Repositorie
 - ORM logging is disabled during tests (`NODE_ENV=test`)
 - Tests use clean database state for isolation
 - Only test assertions and application errors displayed
+
+**DI Testing Patterns:**
+- Unit tests inject dependencies using constructor destructuring
+- Integration tests use the configured DI container
+- Mock dependencies provided as objects: `{ dependency: mockObject }`
 
 ### Security Considerations
 
