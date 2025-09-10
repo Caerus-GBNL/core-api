@@ -37,6 +37,7 @@ desktop.ini
 # Ignore test coverage directory
 coverage/
 mochawesome-report/
+.nyc_output/
 
 # Ignore Cypress videos, screenshots, and browser context files
 cypress/videos/
