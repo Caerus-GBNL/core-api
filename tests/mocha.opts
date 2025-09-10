@@ -1,0 +1,6 @@
+--timeout 10000
+--recursive
+--exit
+--colors
+--reporter spec
+--require tests/hooks.js

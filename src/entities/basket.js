@@ -4,7 +4,9 @@ class Basket {
     productId,
     productCode,
     qty,
+    id = null,
   ) {
+    this.id = id;
     this.employeeId = employeeId;
     this.productId = productId;
     this.productCode = productCode;

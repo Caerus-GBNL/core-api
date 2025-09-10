@@ -1,5 +1,5 @@
 const { asClass, asValue } = require('awilix');
-const { BasketRepository } = require('../adapters');
+const BasketRepository = require('../repositories/basket-repository');
 const { BasketUseCase } = require('../use-cases');
 const { Basket } = require('../models');
 

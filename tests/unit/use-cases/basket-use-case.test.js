@@ -1,7 +1,7 @@
 const sinon = require('sinon');
-const setUp = require('../../set-up');
+const { setupTests } = require('../../set-up');
 const BasketUseCase = require('../../../src/use-cases/basket-use-case');
-const BasketRepository = require('../../../src/adapters/basket-repository');
+const BasketRepository = require('../../../src/repositories/basket-repository');
 const Basket = require('../../../src/entities/basket');
 
 describe('BasketUseCase Class', () => {
@@ -10,7 +10,7 @@ describe('BasketUseCase Class', () => {
   let sandbox;
 
   beforeEach(async () => {
-    ({ expect } = await setUp.setupTests());
+    ({ expect } = await setupTests());
     sandbox = sinon.createSandbox();
     const mockBasketModel = {
       create: sinon.stub(),

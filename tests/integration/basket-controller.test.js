@@ -1,17 +1,17 @@
 const request = require('supertest');
 const httpStatus = require('http-status');
 const app = require('../../src/app');
-const setUp = require('../set-up');
+const { setupTests } = require('../set-up');
 const config = require('../../src/config/config');
 const db = require('../../src/models');
 
 describe('Test routes', () => {
   const service = config.service.name;
-  describe(`POST /${service}/test/baskets`, () => {
+  describe(`POST /${service}/v1/baskets`, () => {
     let expect;
 
     before(async () => {
-      ({ expect } = await setUp.setupTests());
+      ({ expect } = await setupTests());
       // Ensure database tables exist for integration tests
       await db.sequelize.sync({ force: true });
     });
@@ -25,12 +25,16 @@ describe('Test routes', () => {
       };
 
       const response = await request(app)
-        .post(`/${service}/test/baskets`)
+        .post(`/${service}/v1/baskets`)
         .send(basketData)
         .expect(httpStatus.OK);
 
       const result = response.body;
-      expect(result).to.deep.equal(basketData);
+      expect(result.employeeId).to.equal(basketData.employeeId);
+      expect(result.productId).to.equal(basketData.productId);
+      expect(result.productCode).to.equal(basketData.productCode);
+      expect(result.qty).to.equal(basketData.qty);
+      expect(result).to.have.property('id');
     });
   });
 });

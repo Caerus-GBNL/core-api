@@ -2,43 +2,300 @@ components:
   schemas:
     Error:
       type: object
+      required:
+        - code
+        - message
+        - correlationId
       properties:
         code:
           type: number
+          description: HTTP status code
+          example: 400
         message:
           type: string
+          description: Error message
+          example: "Validation failed"
+        correlationId:
+          type: string
+          format: uuid
+          description: Request correlation ID for tracing
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        stack:
+          type: string
+          description: Error stack trace (development only)
+          example: "Error: Validation failed\n    at validateRequest..."
+
+    HealthCheck:
+      type: object
+      required:
+        - status
+        - timestamp
+        - correlationId
+        - checks
+      properties:
+        status:
+          type: string
+          enum: [UP, DOWN]
+          description: Overall health status
+          example: "UP"
+        timestamp:
+          type: string
+          format: date-time
+          description: Health check timestamp
+          example: "2025-08-21T10:30:00.000Z"
+        correlationId:
+          type: string
+          format: uuid
+          description: Request correlation ID
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        checks:
+          type: object
+          properties:
+            database:
+              $ref: '#/components/schemas/DatabaseHealth'
+
+    DatabaseHealth:
+      type: object
+      required:
+        - status
+        - connection
+        - pool
+        - responseTime
+        - timestamp
+      properties:
+        status:
+          type: string
+          enum: [healthy, unhealthy]
+          description: Database health status
+          example: "healthy"
+        connection:
+          type: boolean
+          description: Database connection status
+          example: true
+        pool:
+          $ref: '#/components/schemas/DatabasePool'
+        responseTime:
+          type: string
+          description: Database response time
+          example: "25ms"
+        timestamp:
+          type: string
+          format: date-time
+          example: "2025-08-21T10:30:00.000Z"
+
+    DatabasePool:
+      type: object
+      required:
+        - max
+        - min
+        - acquire
+        - idle
+      properties:
+        max:
+          type: number
+          description: Maximum pool connections
+          example: 10
+        min:
+          type: number
+          description: Minimum pool connections
+          example: 2
+        acquire:
+          type: number
+          description: Connection acquire timeout (ms)
+          example: 30000
+        idle:
+          type: number
+          description: Connection idle timeout (ms)
+          example: 10000
+
+    ReadinessCheck:
+      type: object
+      required:
+        - status
+        - timestamp
+        - correlationId
+      properties:
+        status:
+          type: string
+          enum: [READY, NOT_READY]
+          description: Service readiness status
+          example: "READY"
+        timestamp:
+          type: string
+          format: date-time
+          example: "2025-08-21T10:30:00.000Z"
+        correlationId:
+          type: string
+          format: uuid
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        reason:
+          type: string
+          description: Reason for not ready status (if applicable)
+          example: "Database not available"
+
+    LivenessCheck:
+      type: object
+      required:
+        - status
+        - timestamp
+        - correlationId
+      properties:
+        status:
+          type: string
+          enum: [ALIVE]
+          description: Service liveness status
+          example: "ALIVE"
+        timestamp:
+          type: string
+          format: date-time
+          example: "2025-08-21T10:30:00.000Z"
+        correlationId:
+          type: string
+          format: uuid
+          example: "550e8400-e29b-41d4-a716-446655440000"
+
+    DatabaseStats:
+      type: object
+      required:
+        - database
+        - timestamp
+        - correlationId
+      properties:
+        database:
+          type: object
+          properties:
+            pool:
+              $ref: '#/components/schemas/DatabasePool'
+            dialect:
+              type: string
+              description: Database dialect
+              example: "postgres"
+            version:
+              type: string
+              description: Sequelize version
+              example: "6.32.1"
+        timestamp:
+          type: string
+          format: date-time
+          example: "2025-08-21T10:30:00.000Z"
+        correlationId:
+          type: string
+          format: uuid
+          example: "550e8400-e29b-41d4-a716-446655440000"
 
   responses:
+    BadRequest:
+      description: Bad Request - Invalid input parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            validation:
+              summary: Validation error
+              value:
+                code: 400
+                message: "Validation failed: 'name' is required"
+                correlationId: "550e8400-e29b-41d4-a716-446655440000"
+
     Unauthorized:
-      description: Unauthorized
+      description: Unauthorized - Authentication required
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-          example:
-            code: 401
-            message: Please authenticate
+          examples:
+            missing_token:
+              summary: Missing authentication token
+              value:
+                code: 401
+                message: "Authentication token required"
+                correlationId: "550e8400-e29b-41d4-a716-446655440000"
+            invalid_token:
+              summary: Invalid authentication token
+              value:
+                code: 401
+                message: "Invalid or expired token"
+                correlationId: "550e8400-e29b-41d4-a716-446655440000"
+
     Forbidden:
-      description: Forbidden
+      description: Forbidden - Insufficient permissions
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-          example:
-            code: 403
-            message: Forbidden
+          examples:
+            insufficient_permissions:
+              summary: Insufficient permissions
+              value:
+                code: 403
+                message: "Insufficient permissions to access this resource"
+                correlationId: "550e8400-e29b-41d4-a716-446655440000"
+
     NotFound:
-      description: Not found
+      description: Not Found - Resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-          example:
-            code: 404
-            message: Not found
+          examples:
+            resource_not_found:
+              summary: Resource not found
+              value:
+                code: 404
+                message: "Resource not found"
+                correlationId: "550e8400-e29b-41d4-a716-446655440000"
+
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            server_error:
+              summary: Internal server error
+              value:
+                code: 500
+                message: "Internal server error occurred"
+                correlationId: "550e8400-e29b-41d4-a716-446655440000"
+
+    ServiceUnavailable:
+      description: Service Unavailable - Service is down or not ready
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            service_down:
+              summary: Service unavailable
+              value:
+                code: 503
+                message: "Service is temporarily unavailable"
+                correlationId: "550e8400-e29b-41d4-a716-446655440000"
+
+  parameters:
+    CorrelationId:
+      name: X-Correlation-ID
+      in: header
+      description: Request correlation ID for tracing
+      required: false
+      schema:
+        type: string
+        format: uuid
+      example: "550e8400-e29b-41d4-a716-446655440000"
 
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
+      description: JWT Bearer token authentication
+
+  headers:
+    X-Correlation-ID:
+      description: Request correlation ID for tracing
+      schema:
+        type: string
+        format: uuid
+      example: "550e8400-e29b-41d4-a716-446655440000"

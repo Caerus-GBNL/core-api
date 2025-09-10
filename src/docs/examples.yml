@@ -1,0 +1,247 @@
+components:
+  examples:
+    # Health Check Examples
+    HealthCheckSuccess:
+      summary: Successful health check
+      description: Service is healthy and all dependencies are available
+      value:
+        status: "UP"
+        timestamp: "2025-08-21T10:30:00.000Z"
+        correlationId: "550e8400-e29b-41d4-a716-446655440000"
+        checks:
+          database:
+            status: "healthy"
+            connection: true
+            pool:
+              max: 10
+              min: 2
+              acquire: 30000
+              idle: 10000
+            responseTime: "25ms"
+            timestamp: "2025-08-21T10:30:00.000Z"
+
+    HealthCheckDatabaseDown:
+      summary: Health check with database unavailable
+      description: Service is down due to database connectivity issues
+      value:
+        status: "DOWN"
+        timestamp: "2025-08-21T10:30:00.000Z"
+        correlationId: "550e8400-e29b-41d4-a716-446655440000"
+        checks:
+          database:
+            status: "unhealthy"
+            connection: false
+            error: "Connection refused - could not connect to server"
+            timestamp: "2025-08-21T10:30:00.000Z"
+
+    # Readiness Check Examples
+    ReadinessCheckReady:
+      summary: Service is ready
+      description: Service is ready to accept traffic
+      value:
+        status: "READY"
+        timestamp: "2025-08-21T10:30:00.000Z"
+        correlationId: "550e8400-e29b-41d4-a716-446655440000"
+
+    ReadinessCheckNotReady:
+      summary: Service is not ready
+      description: Service is not ready due to dependency issues
+      value:
+        status: "NOT_READY"
+        timestamp: "2025-08-21T10:30:00.000Z"
+        correlationId: "550e8400-e29b-41d4-a716-446655440000"
+        reason: "Database not available"
+
+    ReadinessCheckStarting:
+      summary: Service is starting
+      description: Service is in startup phase and not ready
+      value:
+        status: "NOT_READY"
+        timestamp: "2025-08-21T10:30:00.000Z"
+        correlationId: "550e8400-e29b-41d4-a716-446655440000"
+        reason: "Service is initializing"
+
+    # Liveness Check Examples
+    LivenessCheckAlive:
+      summary: Service is alive
+      description: Service process is running and responsive
+      value:
+        status: "ALIVE"
+        timestamp: "2025-08-21T10:30:00.000Z"
+        correlationId: "550e8400-e29b-41d4-a716-446655440000"
+
+    # Database Stats Examples
+    DatabaseStatsSuccess:
+      summary: Database statistics
+      description: Detailed database connection pool and configuration statistics
+      value:
+        database:
+          pool:
+            max: 10
+            min: 2
+            acquire: 30000
+            idle: 10000
+          dialect: "postgres"
+          version: "6.32.1"
+        timestamp: "2025-08-21T10:30:00.000Z"
+        correlationId: "550e8400-e29b-41d4-a716-446655440000"
+
+    DatabaseStatsHighLoad:
+      summary: Database statistics under high load
+      description: Database statistics showing high connection usage
+      value:
+        database:
+          pool:
+            max: 20
+            min: 5
+            acquire: 60000
+            idle: 30000
+          dialect: "postgres"
+          version: "6.32.1"
+        timestamp: "2025-08-21T10:30:00.000Z"
+        correlationId: "550e8400-e29b-41d4-a716-446655440000"
+
+    # Error Response Examples
+    ValidationError:
+      summary: Request validation error
+      description: Request failed validation with detailed field errors
+      value:
+        code: 400
+        message: "Validation failed: 'email' must be a valid email address"
+        correlationId: "550e8400-e29b-41d4-a716-446655440000"
+        details:
+          - field: "email"
+            message: "must be a valid email address"
+            value: "invalid-email"
+          - field: "age"
+            message: "must be a number between 1 and 120"
+            value: -5
+
+    UnauthorizedError:
+      summary: Authentication required
+      description: Request requires valid authentication token
+      value:
+        code: 401
+        message: "Authentication token required"
+        correlationId: "550e8400-e29b-41d4-a716-446655440000"
+
+    UnauthorizedInvalidToken:
+      summary: Invalid authentication token
+      description: Provided authentication token is invalid or expired
+      value:
+        code: 401
+        message: "Invalid or expired authentication token"
+        correlationId: "550e8400-e29b-41d4-a716-446655440000"
+
+    ForbiddenError:
+      summary: Insufficient permissions
+      description: User does not have permission to access this resource
+      value:
+        code: 403
+        message: "Insufficient permissions to access this resource"
+        correlationId: "550e8400-e29b-41d4-a716-446655440000"
+
+    NotFoundError:
+      summary: Resource not found
+      description: Requested resource could not be found
+      value:
+        code: 404
+        message: "User with ID '12345' not found"
+        correlationId: "550e8400-e29b-41d4-a716-446655440000"
+
+    RateLimitError:
+      summary: Rate limit exceeded
+      description: Request rate limit has been exceeded
+      value:
+        code: 429
+        message: "Rate limit exceeded. Please try again later"
+        correlationId: "550e8400-e29b-41d4-a716-446655440000"
+        retryAfter: 900
+
+    InternalServerError:
+      summary: Internal server error
+      description: An unexpected error occurred on the server
+      value:
+        code: 500
+        message: "An unexpected error occurred"
+        correlationId: "550e8400-e29b-41d4-a716-446655440000"
+
+    ServiceUnavailableError:
+      summary: Service unavailable
+      description: Service is temporarily unavailable due to maintenance or overload
+      value:
+        code: 503
+        message: "Service temporarily unavailable due to maintenance"
+        correlationId: "550e8400-e29b-41d4-a716-446655440000"
+        retryAfter: 1800
+
+    DatabaseConnectionError:
+      summary: Database connection error
+      description: Service unavailable due to database connectivity issues
+      value:
+        code: 503
+        message: "Service unavailable - database connection failed"
+        correlationId: "550e8400-e29b-41d4-a716-446655440000"
+
+    # Request Header Examples
+    CorrelationIdHeader:
+      summary: Request with correlation ID
+      description: Example of providing correlation ID in request header
+      value: "550e8400-e29b-41d4-a716-446655440000"
+
+    ApiVersionHeader:
+      summary: API version specification
+      description: Example of specifying API version in request header
+      value: "1.1"
+
+    AcceptHeaderVersioned:
+      summary: Content negotiation with version
+      description: Example of requesting specific API version via Accept header
+      value: "application/vnd.api.v1.1+json"
+
+    # API Versioning Examples
+    VersionInfoHeaders:
+      summary: Version information in response headers
+      description: Response headers containing API version information
+      value:
+        X-API-Version: "1.1"
+        X-API-Supported-Versions: "1, 1.0, 1.1"
+        X-API-Latest-Version: "1.1"
+        X-API-Deprecation-Info: "Version 1 is deprecated. Please upgrade to version 1.1"
+
+    UnsupportedVersionError:
+      summary: Unsupported API version
+      description: Requested API version is not supported
+      value:
+        code: 400
+        message: "Unsupported API version: 2.0. Supported versions: 1, 1.0, 1.1"
+        correlationId: "550e8400-e29b-41d4-a716-446655440000"
+
+    # Development Environment Examples
+    DevelopmentErrorWithStack:
+      summary: Development error with stack trace
+      description: Error response in development environment includes stack trace
+      value:
+        code: 500
+        message: "Database connection failed"
+        correlationId: "550e8400-e29b-41d4-a716-446655440000"
+        stack: |
+          Error: Database connection failed
+              at DatabaseConnector.connect (/app/src/utils/database.js:45:15)
+              at async checkDatabaseHealth (/app/src/utils/db-health.js:12:5)
+              at async /app/src/routes/v1/health.route.js:55:22
+
+    ResponseValidationError:
+      summary: Response validation error (development)
+      description: Response validation failed in development environment
+      value:
+        code: 500
+        message: "Response validation failed"
+        correlationId: "550e8400-e29b-41d4-a716-446655440000"
+        validationErrors:
+          - field: "timestamp"
+            message: "must be a valid ISO date string"
+            value: "invalid-date"
+          - field: "correlationId"
+            message: "must be a valid UUID"
+            value: "not-a-uuid"

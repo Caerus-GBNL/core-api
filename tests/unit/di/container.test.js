@@ -1,13 +1,13 @@
 /* eslint-disable max-classes-per-file */
 const { createContainer, asClass } = require('awilix');
-const setUp = require('../../set-up');
+const { setupTests } = require('../../set-up');
 
 describe('Awilix DI Container', () => {
   let container;
   let expect;
 
   before(async () => {
-    ({ expect } = await setUp.setupTests());
+    ({ expect } = await setupTests());
   });
 
   beforeEach(() => {

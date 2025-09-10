@@ -1,11 +1,11 @@
-const setUp = require('../../set-up');
+const { setupTests } = require('../../set-up');
 const Basket = require('../../../src/entities/basket');
 
 describe('Basket Class', () => {
   let expect;
 
   before(async () => {
-    ({ expect } = await setUp.setupTests());
+    ({ expect } = await setupTests());
   });
 
   it('should create a new basket with provided properties', () => {
